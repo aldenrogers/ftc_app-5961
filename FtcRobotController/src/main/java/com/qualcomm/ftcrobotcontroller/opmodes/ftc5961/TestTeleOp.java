@@ -14,6 +14,7 @@ public class TestTeleOp extends OpMode {
     private DcMotor rightBack;
     private Servo continuousRotation;
     private Servo halfCircle;
+    private TankDrive drive;
 
     @Override
     public void init() {
@@ -23,6 +24,11 @@ public class TestTeleOp extends OpMode {
         rightBack = hardwareMap.dcMotor.get("M4");
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
+        drive = new TankDrive();
+        drive.addLeftMotor(leftFront);
+        drive.addLeftMotor(leftBack);
+        drive.addRightMotor(rightFront);
+        drive.addRightMotor(rightBack);
 
         halfCircle = hardwareMap.servo.get("S1");
         continuousRotation = hardwareMap.servo.get("S2");
@@ -33,13 +39,7 @@ public class TestTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        // Tank drive
-        float leftPower = -gamepad1.left_stick_y;
-        float rightPower = -gamepad1.right_stick_y;
-        leftFront.setPower(leftPower);
-        leftBack.setPower(leftPower);
-        rightFront.setPower(rightPower);
-        rightBack.setPower(rightPower);
+        drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
 
         // Set 180 degree servo position in response to button presses
         if (gamepad2.a) {
