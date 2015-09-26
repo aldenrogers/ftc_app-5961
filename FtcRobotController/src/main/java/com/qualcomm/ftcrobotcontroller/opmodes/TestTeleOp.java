@@ -58,7 +58,7 @@ public class TestTeleOp extends OpMode {
         } else if (gamepad2.right_bumper) {
             continuousRotation.setPosition(1);
         } else {
-            continuousRotation.setPosition(0.5);
+            continuousRotation.setPosition(0.55);
         }
 
         // Send sensor values to driver station
