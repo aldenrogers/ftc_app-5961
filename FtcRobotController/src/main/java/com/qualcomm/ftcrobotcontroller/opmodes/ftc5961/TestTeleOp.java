@@ -7,13 +7,13 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class TestTeleOp extends OpMode {
 
-    DeviceInterfaceModule sensors;
-    DcMotor leftFront;
-    DcMotor leftBack;
-    DcMotor rightFront;
-    DcMotor rightBack;
-    Servo continuousRotation;
-    Servo halfCircle;
+    private DeviceInterfaceModule sensors;
+    private DcMotor leftFront;
+    private DcMotor leftBack;
+    private DcMotor rightFront;
+    private DcMotor rightBack;
+    private Servo continuousRotation;
+    private Servo halfCircle;
 
     @Override
     public void init() {
