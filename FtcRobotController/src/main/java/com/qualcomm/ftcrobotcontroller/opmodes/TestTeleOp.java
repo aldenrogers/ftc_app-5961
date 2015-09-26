@@ -3,7 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class TeleOp extends OpMode {
+public class TestTeleOp extends OpMode {
 
     DcMotor leftFront;
     DcMotor leftBack;
