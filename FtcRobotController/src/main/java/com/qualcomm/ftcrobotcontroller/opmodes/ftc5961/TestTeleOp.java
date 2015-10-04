@@ -10,6 +10,7 @@ public class TestTeleOp extends OpMode {
     private DcMotor rightFront;
     private DcMotor rightBack;
     private TankDrive drive;
+    private OrientationTracker ot;
 
     @Override
     public void init() {
@@ -24,14 +25,23 @@ public class TestTeleOp extends OpMode {
         drive.addLeftMotor(leftBack);
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
+
+        ot = new OrientationTracker(hardwareMap.appContext);
+        ot.start();
     }
 
     @Override
     public void loop() {
         drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
+
+        // Send orientation data to driver station
+        telemetry.addData("azimuth", ot.orientation[0]);
+        telemetry.addData("pitch", ot.orientation[1]);
+        telemetry.addData("roll", ot.orientation[2]);
     }
 
     @Override
     public void stop() {
+        ot.stop();
     }
 }
