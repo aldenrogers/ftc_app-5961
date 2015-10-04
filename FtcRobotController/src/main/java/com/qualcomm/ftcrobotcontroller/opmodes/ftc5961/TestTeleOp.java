@@ -2,18 +2,13 @@ package com.qualcomm.ftcrobotcontroller.opmodes.ftc5961;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
-import com.qualcomm.robotcore.hardware.Servo;
 
 public class TestTeleOp extends OpMode {
 
-    private DeviceInterfaceModule sensors;
     private DcMotor leftFront;
     private DcMotor leftBack;
     private DcMotor rightFront;
     private DcMotor rightBack;
-    private Servo continuousRotation;
-    private Servo halfCircle;
     private TankDrive drive;
 
     @Override
@@ -29,41 +24,11 @@ public class TestTeleOp extends OpMode {
         drive.addLeftMotor(leftBack);
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
-
-        halfCircle = hardwareMap.servo.get("S1");
-        continuousRotation = hardwareMap.servo.get("S2");
-        halfCircle.setPosition(0);
-
-        sensors = hardwareMap.deviceInterfaceModule.get("CDI");
     }
 
     @Override
     public void loop() {
         drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
-
-        // Set 180 degree servo position in response to button presses
-        if (gamepad2.a) {
-            halfCircle.setPosition(0);
-        } else if (gamepad2.b) {
-            halfCircle.setPosition(0.33);
-        } else if (gamepad2.y) {
-            halfCircle.setPosition(0.67);
-        } else if (gamepad2.x) {
-            halfCircle.setPosition(1);
-        }
-
-        // Move continuous rotation servo depending on button state
-        if (gamepad2.left_bumper) {
-            continuousRotation.setPosition(0);
-        } else if (gamepad2.right_bumper) {
-            continuousRotation.setPosition(1);
-        } else {
-            continuousRotation.setPosition(0.55);
-        }
-
-        // Send sensor values to driver station
-        telemetry.addData("Touch", sensors.getAnalogInputValue(0) > 512 ? "Pressed" : "Released");
-        telemetry.addData("Distance", sensors.getAnalogInputValue(1));
     }
 
     @Override
