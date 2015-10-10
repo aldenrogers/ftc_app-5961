@@ -33,6 +33,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestAutonomous;
 import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestTeleOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.JohnsRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -102,6 +103,6 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("TestTeleOp", TestTeleOp.class);
     manager.register("TestAutonomous", TestAutonomous.class);
-    
+    manager.register("JohnsRobot", JohnsRobot.class);
   }
 }
