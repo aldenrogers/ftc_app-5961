@@ -10,7 +10,6 @@ public class TestTeleOp extends OpMode {
     private DcMotor leftBack;
     private DcMotor rightFront;
     private DcMotor rightBack;
-    private DcMotor slide;
     private TankDrive drive;
     private OrientationTracker ot;
     private ColorSensor color;
@@ -21,7 +20,6 @@ public class TestTeleOp extends OpMode {
         leftBack = hardwareMap.dcMotor.get("M3");
         rightFront = hardwareMap.dcMotor.get("M2");
         rightBack = hardwareMap.dcMotor.get("M4");
-        slide = hardwareMap.dcMotor.get("M5");
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
         drive = new TankDrive();
@@ -39,14 +37,6 @@ public class TestTeleOp extends OpMode {
     @Override
     public void loop() {
         drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
-
-        if (gamepad1.dpad_up) {
-            slide.setPower(0.3);
-        } else if (gamepad1.dpad_down) {
-            slide.setPower(-0.3);
-        } else {
-            slide.setPower(0);
-        }
 
         telemetry.addData("alpha", color.alpha());
         telemetry.addData("red", color.red());
