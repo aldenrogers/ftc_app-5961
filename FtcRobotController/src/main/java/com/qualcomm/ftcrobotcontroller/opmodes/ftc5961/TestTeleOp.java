@@ -1,8 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.ftc5961;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 
 public class TestTeleOp extends OpMode {
 
@@ -12,7 +12,7 @@ public class TestTeleOp extends OpMode {
     private DcMotor rightBack;
     private TankDrive drive;
     private OrientationTracker ot;
-    private ColorSensor color;
+    private AdafruitColorSensor color;
 
     @Override
     public void init() {
@@ -31,14 +31,15 @@ public class TestTeleOp extends OpMode {
         ot = new OrientationTracker(hardwareMap.appContext);
         ot.start();
 
-        color = hardwareMap.colorSensor.get("color1");
+        DeviceInterfaceModule dim = hardwareMap.deviceInterfaceModule.get("CDI");
+        color = new AdafruitColorSensor(dim, 0);
     }
 
     @Override
     public void loop() {
         drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
 
-        telemetry.addData("alpha", color.alpha());
+        telemetry.addData("alpha", color.clear());
         telemetry.addData("red", color.red());
         telemetry.addData("green", color.green());
         telemetry.addData("blue", color.blue());
