@@ -11,7 +11,6 @@ public class TestTeleOp extends OpMode {
     private DcMotor rightFront;
     private DcMotor rightBack;
     private TankDrive drive;
-    private OrientationTracker ot;
     private AdafruitColorSensor color;
 
     @Override
@@ -28,9 +27,6 @@ public class TestTeleOp extends OpMode {
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
 
-        ot = new OrientationTracker(hardwareMap.appContext);
-        ot.start();
-
         DeviceInterfaceModule dim = hardwareMap.deviceInterfaceModule.get("CDI");
         color = new AdafruitColorSensor(dim, 0);
     }
@@ -43,10 +39,5 @@ public class TestTeleOp extends OpMode {
         telemetry.addData("red", color.red());
         telemetry.addData("green", color.green());
         telemetry.addData("blue", color.blue());
-    }
-
-    @Override
-    public void stop() {
-        ot.stop();
     }
 }
