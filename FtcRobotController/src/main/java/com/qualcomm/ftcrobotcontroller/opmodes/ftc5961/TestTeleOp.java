@@ -15,9 +15,9 @@ public class TestTeleOp extends OpMode {
     public void loop() {
         robot.drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
 
-        telemetry.addData("alpha", robot.color.clear());
-        telemetry.addData("red", robot.color.red());
-        telemetry.addData("green", robot.color.green());
-        telemetry.addData("blue", robot.color.blue());
+        telemetry.addData("left red", robot.leftColor.red());
+        telemetry.addData("left blue", robot.leftColor.blue());
+        telemetry.addData("right red", robot.rightColor.red());
+        telemetry.addData("right blue", robot.rightColor.blue());
     }
 }

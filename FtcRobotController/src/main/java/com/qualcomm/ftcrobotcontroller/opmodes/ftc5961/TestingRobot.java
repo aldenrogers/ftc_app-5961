@@ -10,7 +10,8 @@ public class TestingRobot {
     public final DcMotor rightFront;
     public final DcMotor rightBack;
     public final TankDrive drive;
-    public final AdafruitColorSensor color;
+    public final AdafruitColorSensor leftColor;
+    public final AdafruitColorSensor rightColor;
 
     public TestingRobot(HardwareMap map) {
         leftFront = map.dcMotor.get("M1");
@@ -26,6 +27,9 @@ public class TestingRobot {
         drive.addRightMotor(rightBack);
 
         DeviceInterfaceModule dim = map.deviceInterfaceModule.get("CDI");
-        color = new AdafruitColorSensor(dim, 0);
+        leftColor = new AdafruitColorSensor(dim, 0);
+
+        DeviceInterfaceModule dim2 = map.deviceInterfaceModule.get("CDIExtra");
+        rightColor = new AdafruitColorSensor(dim2, 0);
     }
 }
