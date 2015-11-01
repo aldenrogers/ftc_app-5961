@@ -32,7 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.JohnsRobot;
-import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestAutonomous;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestAutonomousBlue;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestAutonomousRed;
 import com.qualcomm.ftcrobotcontroller.opmodes.ftc5961.TestTeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
@@ -52,7 +53,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("NullOp", NullOp.class);
 
     manager.register("TestTeleOp", TestTeleOp.class);
-    manager.register("TestAutonomous", TestAutonomous.class);
+    manager.register("TestAutonomousBlue", TestAutonomousBlue.class);
+    manager.register("TestAutonomousRed", TestAutonomousRed.class);
     manager.register("JohnsRobot", JohnsRobot.class);
   }
 }
