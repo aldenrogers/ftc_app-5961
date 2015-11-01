@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.ftc5961;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class TestingRobot {
     public final DcMotor leftFront;
@@ -10,6 +11,7 @@ public class TestingRobot {
     public final DcMotor rightFront;
     public final DcMotor rightBack;
     public final TankDrive drive;
+    public final Servo climbers;
     public final AdafruitColorSensor leftColor;
     public final AdafruitColorSensor rightColor;
 
@@ -25,6 +27,9 @@ public class TestingRobot {
         drive.addLeftMotor(leftBack);
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
+
+        climbers = map.servo.get("climbers");
+        climbers.setPosition(0);
 
         DeviceInterfaceModule dim = map.deviceInterfaceModule.get("CDI");
         leftColor = new AdafruitColorSensor(dim, 0);
