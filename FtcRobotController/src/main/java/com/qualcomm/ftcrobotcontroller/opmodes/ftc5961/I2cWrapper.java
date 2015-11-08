@@ -41,7 +41,7 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
         controller.registerForI2cPortReadyCallback(this, port);
     }
 
-    public int getShort(int registerLow, int registerHigh) {
+    public int getUnsignedShort(int registerLow, int registerHigh) {
         validateRegister(registerLow);
         validateRegister(registerHigh);
         try {
@@ -57,6 +57,16 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
         } finally {
             readCacheLock.unlock();
         }
+    }
+
+    public int getSignedShort(int registerLow, int registerHigh) {
+        int result = getUnsignedShort(registerLow, registerHigh);
+        if ((result & (1 << 15)) != 0) {
+            // The sign bit of the short was high.
+            // Set the sign bit and the rest of the upper half of the int.
+            result |= -1 << 16;
+        }
+        return result;
     }
 
     public boolean isAvailable(int register) {

@@ -26,19 +26,19 @@ public class AdafruitColorSensor {
     }
 
     public int clear() {
-        return i2c.getShort(CDATAL, CDATAH);
+        return i2c.getUnsignedShort(CDATAL, CDATAH);
     }
 
     public int red() {
-        return i2c.getShort(RDATAL, RDATAH);
+        return i2c.getUnsignedShort(RDATAL, RDATAH);
     }
 
     public int green() {
-        return i2c.getShort(GDATAL, GDATAH);
+        return i2c.getUnsignedShort(GDATAL, GDATAH);
     }
 
     public int blue() {
-        return i2c.getShort(BDATAL, BDATAH);
+        return i2c.getUnsignedShort(BDATAL, BDATAH);
     }
 
     public boolean isReady() {
