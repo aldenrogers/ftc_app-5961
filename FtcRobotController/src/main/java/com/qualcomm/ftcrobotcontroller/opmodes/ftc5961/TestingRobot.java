@@ -14,6 +14,7 @@ public class TestingRobot {
     public final Servo climbers;
     public final AdafruitColorSensor leftColor;
     public final AdafruitColorSensor rightColor;
+    public final AdafruitIMU imu;
 
     public TestingRobot(HardwareMap map) {
         leftFront = map.dcMotor.get("M2");
@@ -33,6 +34,7 @@ public class TestingRobot {
 
         DeviceInterfaceModule dim = map.deviceInterfaceModule.get("CDI");
         leftColor = new AdafruitColorSensor(dim, 0);
+        imu = new AdafruitIMU(dim, 1);
 
         DeviceInterfaceModule dim2 = map.deviceInterfaceModule.get("CDIExtra");
         rightColor = new AdafruitColorSensor(dim2, 0);
