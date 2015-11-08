@@ -109,8 +109,7 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
 
         @Override
         public void act() {
-            int adjReg = 128 + target; // Another peculiarity of the SDK
-            controller.enableI2cWriteMode(port, addr, adjReg, data.length);
+            controller.enableI2cWriteMode(port, addr, target, data.length);
 
             try {
                 writeCacheLock.lock();
@@ -140,11 +139,10 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
 
         @Override
         public void act() {
-            int adjReg = 128 + startAddress; // Another peculiarity of the SDK
             int length = endAddress - startAddress + 1;
 
             // Set up the read metadata in the local copy of the cache
-            controller.enableI2cReadMode(port, addr, adjReg, length);
+            controller.enableI2cReadMode(port, addr, startAddress, length);
             // Send the entire cache so that the controller gets the metadata
             controller.writeI2cCacheToController(port);
 
