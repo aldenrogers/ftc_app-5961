@@ -24,7 +24,12 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
     public I2cWrapper(I2cController controller, int port, int address) {
         this.controller = controller;
         this.port = port;
-        addr = address * 2; // Inexplicable feature of the SDK
+
+        // I2C slave devices have seven-bit addresses, which are transmitted in
+        // a byte with the "read / write bit" specifying what type of operation
+        // is requested. The FTC SDK expects addresses to be bitshifted left by
+        // one place to leave space at the end for the read / write bit.
+        addr = address << 1;
 
         readCache = controller.getI2cReadCache(port);
         writeCache = controller.getI2cWriteCache(port);
