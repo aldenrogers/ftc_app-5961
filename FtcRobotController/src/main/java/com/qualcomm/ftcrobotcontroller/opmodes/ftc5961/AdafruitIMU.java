@@ -19,6 +19,7 @@ public class AdafruitIMU {
     public static final int EUL_Heading_LSB = 0x1A;
 
     private I2cWrapper i2c;
+    private double headingOffset;
 
     public AdafruitIMU(I2cController controller, int port) {
         i2c = new I2cWrapper(controller, port, I2C_ADDRESS);
@@ -26,6 +27,7 @@ public class AdafruitIMU {
         i2c.addAction(i2c.new I2cWrite(UNIT_SEL, units));
         i2c.addAction(i2c.new I2cWrite(OPR_MODE, IMU));
         i2c.addAction(i2c.new I2cReadSetup(EUL_Heading_LSB, EUL_Pitch_MSB));
+        headingOffset = 0;
     }
 
     public double pitch() {
@@ -42,5 +44,32 @@ public class AdafruitIMU {
 
     public boolean isReady() {
         return i2c.areActionsFinished();
+    }
+
+    /**
+     * Define the current heading as zero for subsequent calls to {@link #relativeHeading()}
+     */
+    public void zeroHeading() {
+        headingOffset = heading();
+    }
+
+    /**
+     * Return an adjusted heading value based on the last call to {@link #zeroHeading()}
+     * @return a heading between 0 and 360
+     */
+    public double relativeHeading() {
+        return differenceMod(heading(), headingOffset, 360);
+    }
+
+    /**
+     * Calculate the difference between two numbers under a certain modulus.
+     * The result will be a nonnegative number less than the modulus.
+     * @param minuend the number from which to subtract
+     * @param subtrahend the number to subtract
+     * @param modulus to modulus under which to operate
+     * @return {@code minuend} - {@code subtrahend} mod {@code modulus}
+     */
+    public static double differenceMod(double minuend, double subtrahend, double modulus) {
+        return ((minuend - subtrahend) % modulus + modulus) % modulus;
     }
 }
