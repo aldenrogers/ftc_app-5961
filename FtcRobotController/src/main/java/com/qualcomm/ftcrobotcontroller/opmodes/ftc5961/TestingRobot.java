@@ -17,10 +17,10 @@ public class TestingRobot {
     public final AdafruitIMU imu;
 
     public TestingRobot(HardwareMap map) {
-        leftFront = map.dcMotor.get("M2");
-        leftBack = map.dcMotor.get("M4");
-        rightFront = map.dcMotor.get("M1");
-        rightBack = map.dcMotor.get("M3");
+        leftFront = map.dcMotor.get("M1");
+        leftBack = map.dcMotor.get("M3");
+        rightFront = map.dcMotor.get("M2");
+        rightBack = map.dcMotor.get("M4");
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
         drive = new TankDrive();
