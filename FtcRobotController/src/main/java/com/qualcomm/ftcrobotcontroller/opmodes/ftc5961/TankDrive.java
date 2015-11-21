@@ -30,4 +30,24 @@ public class TankDrive {
             r.setPower(right);
         }
     }
+
+    public int sumLeftEncoders() {
+        int result = 0;
+        for (DcMotor l : leftMotors) {
+            result += l.getCurrentPosition();
+        }
+        return result;
+    }
+
+    public int sumRightEncoders() {
+        int result = 0;
+        for (DcMotor r : rightMotors) {
+            result += r.getCurrentPosition();
+        }
+        return result;
+    }
+
+    public int sumEncoders() {
+        return sumLeftEncoders() + sumRightEncoders();
+    }
 }
