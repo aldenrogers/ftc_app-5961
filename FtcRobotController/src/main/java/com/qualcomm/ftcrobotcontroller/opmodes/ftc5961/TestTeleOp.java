@@ -27,9 +27,9 @@ public class TestTeleOp extends OpMode {
         } else {
             robot.levelBucket();
         }
-        if (gamepad1.dpad_up) {
+        if (gamepad1.right_bumper) {
             robot.armIn();
-        } else if (gamepad1.dpad_down) {
+        } else if (gamepad1.right_trigger > 0.25) {
             robot.armOut();
         } else {
             robot.arm.setPower(0);
