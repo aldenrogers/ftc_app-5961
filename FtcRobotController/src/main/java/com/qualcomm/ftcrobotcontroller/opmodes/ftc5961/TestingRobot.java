@@ -19,6 +19,8 @@ public class TestingRobot {
     public final AdafruitIMU imu;
     public final TouchSensor touch;
     private int armOffset;
+    private double lastArmPower;
+    private static final double ARM_POWER_INCREMENT = 0.02;
 
     public TestingRobot(HardwareMap map) {
         leftFront = map.dcMotor.get("M1");
@@ -32,8 +34,10 @@ public class TestingRobot {
         drive.addLeftMotor(leftBack);
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
+
         arm = map.dcMotor.get("M5");
         armOffset = arm.getCurrentPosition();
+        lastArmPower = 0;
 
         bucket = map.servo.get("S1");
         bucket.setPosition(0);
@@ -64,11 +68,44 @@ public class TestingRobot {
         bucket.setPosition(bucketPos);
     }
 
-    public void armIn() {
-        arm.setPower(0.21 + 0.2 * Math.cos(getArmPosition()));
+    private double armInPower(double basePower) {
+        return 0.01 + basePower * (1 + Math.cos(getArmPosition()));
     }
 
-    public void armOut() {
-        arm.setPower(-0.21 + 0.2 * Math.cos(getArmPosition()));
+    private double armOutPower(double basePower) {
+        return -0.01 + basePower * (-1 + Math.cos(getArmPosition()));
+    }
+
+    public void armIn(double basePower) {
+        arm.setPower(armInPower(basePower));
+    }
+
+    public void armOut(double basePower) {
+        arm.setPower(armOutPower(basePower));
+    }
+
+    private boolean armPowerToward(double targetPower) {
+        double diff = targetPower - lastArmPower;
+        if (Math.abs(diff) < ARM_POWER_INCREMENT) {
+            lastArmPower = targetPower;
+            arm.setPower(targetPower);
+            return true;
+        } else {
+            lastArmPower += ARM_POWER_INCREMENT * Math.signum(diff);
+            arm.setPower(lastArmPower);
+            return false;
+        }
+    }
+
+    public void armInSmooth(double basePower) {
+        armPowerToward(armInPower(basePower));
+    }
+
+    public void armOutSmooth(double basePower) {
+        armPowerToward(armOutPower(basePower));
+    }
+
+    public boolean armStopSmooth() {
+        return armPowerToward(0);
     }
 }
