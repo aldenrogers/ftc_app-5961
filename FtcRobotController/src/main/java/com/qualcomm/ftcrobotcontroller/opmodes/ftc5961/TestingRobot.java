@@ -59,7 +59,7 @@ public class TestingRobot {
      * Set the position of the servo bucket based on the arm motor encoder
      */
     public void levelBucket() {
-        double bucketPos = (Math.PI / 2 - getArmPosition()) / Math.PI;
+        double bucketPos = (Math.PI - getArmPosition()) / Math.PI;
         if (bucketPos < 0) {
             bucketPos = 0;
         } else if (bucketPos > 1) {
