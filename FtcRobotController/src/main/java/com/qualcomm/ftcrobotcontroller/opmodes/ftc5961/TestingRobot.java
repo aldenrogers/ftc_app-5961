@@ -38,10 +38,10 @@ public class TestingRobot {
 
         DeviceInterfaceModule dim = map.deviceInterfaceModule.get("CDI");
         leftColor = new AdafruitColorSensor(dim, 0);
-        imu = new AdafruitIMU(dim, 1);
 
         DeviceInterfaceModule dim2 = map.deviceInterfaceModule.get("CDIExtra");
         rightColor = new AdafruitColorSensor(dim2, 0);
+        imu = new AdafruitIMU(dim2, 1);
     }
 
     public double getArmPosition() {
