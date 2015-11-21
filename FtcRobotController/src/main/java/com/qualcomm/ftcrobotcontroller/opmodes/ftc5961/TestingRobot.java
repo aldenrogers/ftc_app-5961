@@ -11,10 +11,12 @@ public class TestingRobot {
     public final DcMotor rightFront;
     public final DcMotor rightBack;
     public final TankDrive drive;
-    public final Servo climbers;
+    public final DcMotor arm;
+    public final Servo bucket;
     public final AdafruitColorSensor leftColor;
     public final AdafruitColorSensor rightColor;
     public final AdafruitIMU imu;
+    private int armOffset;
 
     public TestingRobot(HardwareMap map) {
         leftFront = map.dcMotor.get("M1");
@@ -28,9 +30,11 @@ public class TestingRobot {
         drive.addLeftMotor(leftBack);
         drive.addRightMotor(rightFront);
         drive.addRightMotor(rightBack);
+        arm = map.dcMotor.get("M5");
+        armOffset = arm.getCurrentPosition();
 
-        climbers = map.servo.get("climbers");
-        climbers.setPosition(0);
+        bucket = map.servo.get("S1");
+        bucket.setPosition(0);
 
         DeviceInterfaceModule dim = map.deviceInterfaceModule.get("CDI");
         leftColor = new AdafruitColorSensor(dim, 0);
@@ -38,5 +42,30 @@ public class TestingRobot {
 
         DeviceInterfaceModule dim2 = map.deviceInterfaceModule.get("CDIExtra");
         rightColor = new AdafruitColorSensor(dim2, 0);
+    }
+
+    public double getArmPosition() {
+        return Math.PI * (960 + (arm.getCurrentPosition() - armOffset)) / 1080;
+    }
+
+    /**
+     * Set the position of the servo bucket based on the arm motor encoder
+     */
+    public void levelBucket() {
+        double bucketPos = (Math.PI / 2 - getArmPosition()) / Math.PI;
+        if (bucketPos < 0) {
+            bucketPos = 0;
+        } else if (bucketPos > 1) {
+            bucketPos = 1;
+        }
+        bucket.setPosition(bucketPos);
+    }
+
+    public void armIn() {
+        arm.setPower(0.21 + 0.2 * Math.cos(getArmPosition()));
+    }
+
+    public void armOut() {
+        arm.setPower(-0.21 + 0.2 * Math.cos(getArmPosition()));
     }
 }
