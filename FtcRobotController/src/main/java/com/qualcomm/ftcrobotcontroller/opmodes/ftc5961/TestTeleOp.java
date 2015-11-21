@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class TestTeleOp extends OpMode {
     private TestingRobot robot;
+    private boolean floorBucket;
 
     @Override
     public void init() {
@@ -14,12 +15,24 @@ public class TestTeleOp extends OpMode {
     public void loop() {
         robot.drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
 
-        telemetry.addData("left red", robot.leftColor.red());
-        telemetry.addData("left blue", robot.leftColor.blue());
-        telemetry.addData("right red", robot.rightColor.red());
-        telemetry.addData("right blue", robot.rightColor.blue());
-        telemetry.addData("Heading", robot.imu.heading());
-        telemetry.addData("Pitch", robot.imu.pitch());
-        telemetry.addData("Roll", robot.imu.roll());
+        if (gamepad1.b) {
+            floorBucket = true;
+        } else if (gamepad1.y) {
+            floorBucket = false;
+        }
+        if (floorBucket) {
+            robot.bucket.setPosition(0.65);
+        } else if (gamepad1.a) {
+            robot.bucket.setPosition(0);
+        } else {
+            robot.levelBucket();
+        }
+        if (gamepad1.dpad_up) {
+            robot.armIn();
+        } else if (gamepad1.dpad_down) {
+            robot.armOut();
+        } else {
+            robot.arm.setPower(0);
+        }
     }
 }
