@@ -1,5 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.ftc5961;
 
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,6 +17,7 @@ public class TestingRobot {
     public final AdafruitColorSensor leftColor;
     public final AdafruitColorSensor rightColor;
     public final AdafruitIMU imu;
+    public final TouchSensor touch;
     private int armOffset;
 
     public TestingRobot(HardwareMap map) {
@@ -41,6 +43,7 @@ public class TestingRobot {
 
         DeviceInterfaceModule dim2 = map.deviceInterfaceModule.get("CDIExtra");
         rightColor = new AdafruitColorSensor(dim2, 0);
+        touch = new TouchSensor(new AnalogInput(dim2, 0));
         imu = new AdafruitIMU(dim2, 1);
     }
 
