@@ -28,11 +28,11 @@ public class TestTeleOp extends OpMode {
             robot.levelBucket();
         }
         if (gamepad1.right_bumper) {
-            robot.armIn();
+            robot.armInSmooth(gamepad1.x ? 0.25 : 0.15);
         } else if (gamepad1.right_trigger > 0.25) {
-            robot.armOut();
+            robot.armOutSmooth(0.15);
         } else {
-            robot.arm.setPower(0);
+            robot.armStopSmooth();
         }
     }
 }
