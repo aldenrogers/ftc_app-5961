@@ -2,20 +2,17 @@ package com.qualcomm.ftcrobotcontroller.opmodes.ftc5961;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class TankDrive {
-    private Set<DcMotor> leftMotors;
-    private Set<DcMotor> rightMotors;
+    private DcMotorSet leftMotors;
+    private DcMotorSet rightMotors;
     private int currentId;
     private double errorAccumulator;
     private double Kproportional;
     private double Kintegral;
 
     public TankDrive() {
-        leftMotors = new HashSet<DcMotor>();
-        rightMotors = new HashSet<DcMotor>();
+        leftMotors = new DcMotorSet();
+        rightMotors = new DcMotorSet();
         // It's not a problem that the first directed drive maneuver might have
         // id 0, because 0 is the value to which errorAccumulator is reset upon
         // a change in id.
@@ -34,12 +31,8 @@ public class TankDrive {
     }
 
     public void setPower(double left, double right) {
-        for (DcMotor l : leftMotors) {
-            l.setPower(left);
-        }
-        for (DcMotor r : rightMotors) {
-            r.setPower(right);
-        }
+        leftMotors.setPower(left);
+        rightMotors.setPower(right);
     }
 
     public void setPowerQuiet(double left, double right) {
@@ -87,19 +80,11 @@ public class TankDrive {
     }
 
     public int sumLeftEncoders() {
-        int result = 0;
-        for (DcMotor l : leftMotors) {
-            result += l.getCurrentPosition();
-        }
-        return result;
+        return leftMotors.sumEncoders();
     }
 
     public int sumRightEncoders() {
-        int result = 0;
-        for (DcMotor r : rightMotors) {
-            result += r.getCurrentPosition();
-        }
-        return result;
+        return rightMotors.sumEncoders();
     }
 
     public int sumEncoders() {
