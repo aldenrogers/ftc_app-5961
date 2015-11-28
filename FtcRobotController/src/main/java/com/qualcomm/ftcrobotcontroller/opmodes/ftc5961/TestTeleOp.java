@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class TestTeleOp extends OpMode {
     private TestingRobot robot;
-    private boolean floorBucket;
 
     @Override
     public void init() {
@@ -14,25 +13,5 @@ public class TestTeleOp extends OpMode {
     @Override
     public void loop() {
         robot.drive.setPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
-
-        if (gamepad1.b) {
-            floorBucket = true;
-        } else if (gamepad1.y) {
-            floorBucket = false;
-        }
-        if (floorBucket) {
-            robot.bucket.setPosition(0.65);
-        } else if (gamepad1.a) {
-            robot.bucket.setPosition(0);
-        } else {
-            robot.levelBucket();
-        }
-        if (gamepad1.right_bumper) {
-            robot.armInSmooth(gamepad1.x ? 0.25 : 0.15);
-        } else if (gamepad1.right_trigger > 0.25) {
-            robot.armOutSmooth(0.15);
-        } else {
-            robot.armStopSmooth();
-        }
     }
 }
