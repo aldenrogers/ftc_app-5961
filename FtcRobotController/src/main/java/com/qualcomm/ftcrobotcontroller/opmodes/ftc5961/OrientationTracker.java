@@ -6,6 +6,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+/**
+ * Tracks orientation using the phone's onboard sensors
+ * @deprecated Use {@link AdafruitIMU} for much more accurate performace.
+ */
+@Deprecated
 public class OrientationTracker implements SensorEventListener {
     private SensorManager phoneSensors;
     private Sensor accelerometer;
