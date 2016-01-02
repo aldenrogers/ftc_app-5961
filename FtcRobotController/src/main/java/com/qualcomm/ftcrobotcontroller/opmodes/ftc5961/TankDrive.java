@@ -60,9 +60,9 @@ public class TankDrive {
      * Drive in a particular direction. The ratio between power on the left and
      * right sides will be such that the robot turns toward the target heading.
      * This method is expected to be called repeatedly to respond to changes in
-     * heading. In order to use proportional-integral control, so it saves some
-     * data across repeated invocations. Pass a new {@code id} to discard saved
-     * data when targeting a different heading.
+     * heading. To use proportional-integral-derivative control, some data must
+     * be saved across repeated invocations. Passing a new {@code id} indicates
+     * that data should be discarded because the target heading has changed.
      * @param power the maximum power to assign to one side or the other
      * @param heading the current heading, in degrees
      * @param target the desired heading, in degrees
