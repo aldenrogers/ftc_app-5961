@@ -35,7 +35,6 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
         writeCache = controller.getI2cWriteCache(port);
         readCacheLock = controller.getI2cReadCacheLock(port);
         writeCacheLock = controller.getI2cWriteCacheLock(port);
-        writeCacheLock = controller.getI2cWriteCacheLock(port);
 
         // No read has been configured yet, so make every register invalid.
         cacheStartAddress = 0;
