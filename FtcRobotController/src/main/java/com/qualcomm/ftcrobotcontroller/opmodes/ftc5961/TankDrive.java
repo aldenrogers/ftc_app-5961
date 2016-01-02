@@ -63,7 +63,8 @@ public class TankDrive {
      * heading. To use proportional-integral-derivative control, some data must
      * be saved across repeated invocations. Passing a new {@code id} indicates
      * that data should be discarded because the target heading has changed.
-     * @param power the maximum power to assign to one side or the other
+     * @param power the maximum power to assign to one side or the other. Use 0
+     *              to request a point turn towards the target heading.
      * @param heading the current heading, in degrees
      * @param target the desired heading, in degrees
      * @param id an identifying number unique to the current drive maneuver
@@ -95,10 +96,14 @@ public class TankDrive {
             derivative = 0;
         }
         double u = Kp * error + Ki * errorAccumulator + Kd * derivative;
-        if (u > 0) {
-            setPowerQuiet((1 - u) * power, power);
+        if (power == 0) {
+            if (u > 0) {
+                setPowerQuiet((1 - u) * power, power);
+            } else {
+                setPowerQuiet(power, (1 + u) * power);
+            }
         } else {
-            setPowerQuiet(power, (1 + u) * power);
+            setPowerQuiet(-u, u);
         }
     }
 
