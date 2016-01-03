@@ -11,7 +11,9 @@ public class I2cAddressTranslator implements I2cController {
 
     public I2cAddressTranslator(I2cController controller, int xorByte) {
         parent = controller;
-        xor = xorByte;
+        // Addresses passed into an I2cController will have been shifted due to
+        // the R / W bit, so the translation byte must be shifted as well.
+        xor = xorByte << 1;
     }
 
     @Override
