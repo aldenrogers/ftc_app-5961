@@ -91,9 +91,10 @@ public class I2cWrapper implements I2cController.I2cPortReadyCallback {
             return;
         }
 
-        I2cAction nextAction = actionQueue.poll();
+        I2cAction nextAction = actionQueue.peek();
         if (nextAction != null) {
             nextAction.act();
+            actionQueue.remove();
         } else {
             // Assume we're in a repeated read state
 
