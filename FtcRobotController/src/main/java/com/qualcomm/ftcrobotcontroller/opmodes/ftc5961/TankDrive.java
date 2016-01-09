@@ -96,7 +96,7 @@ public class TankDrive {
             derivative = 0;
         }
         double u = Kp * error + Ki * errorAccumulator + Kd * derivative;
-        if (power == 0) {
+        if (power != 0) {
             if (u > 0) {
                 setPowerQuiet((1 - u) * power, power);
             } else {
