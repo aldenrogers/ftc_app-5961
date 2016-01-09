@@ -43,15 +43,10 @@ public class TankDrive {
     }
 
     public void setPowerQuiet(double left, double right) {
-        if (left > 1) {
-            left = 1;
-        } else if (left < -1) {
-            left = -1;
-        }
-        if (right > 1) {
-            right = 1;
-        } else if (right < -1) {
-            right = -1;
+        double max = Math.max(Math.abs(left), Math.abs(right));
+        if (max > 1) {
+            left /= max;
+            right /= max;
         }
         setPower(left, right);
     }
