@@ -43,8 +43,8 @@ public class MainRobot {
         touch = new DigitalChannel(cdi, 0);
     }
 
-    public void driveDirected(double power, double direction, int id) {
-        drive.directed(power, imu.relativeHeading(), direction, id);
+    public double driveDirected(double power, double direction, int id) {
+        return drive.directed(power, imu.relativeHeading(), direction, id);
     }
 
     public class BucketRotate {

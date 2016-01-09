@@ -62,8 +62,9 @@ public class TankDrive {
      * @param heading the current heading, in degrees
      * @param target the desired heading, in degrees
      * @param id an identifying number unique to the current drive maneuver
+     * @return the output (adjustment magnitude) of the PID process
      */
-    public void directed(double power, double heading, double target, int id) {
+    public double directed(double power, double heading, double target, int id) {
         if (id != currentId) {
             errorAccumulator = 0;
             currentId = id;
@@ -91,6 +92,7 @@ public class TankDrive {
         }
         double u = Kp * error + Ki * errorAccumulator + Kd * derivative;
         setPowerQuiet(power - u, power + u);
+        return u;
     }
 
     public int sumLeftEncoders() {
