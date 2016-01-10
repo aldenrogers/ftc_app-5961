@@ -12,10 +12,8 @@ public class MainRobot {
     public final TankDrive drive;
     public final Lift lift;
     public final Sweeper sweeper;
-    public final WritableBit bucketGate;
     public final BucketRotate bucketRotate;
     public final BucketSlide bucketSlide;
-    public final WritableBit climberDropper;
     public final AdafruitIMU imu;
     public final DigitalChannel touch;
 
@@ -23,20 +21,19 @@ public class MainRobot {
         drive = new TankDrive();
         DcMotorController mc1 = map.dcMotorController.get("MC1");
         DcMotorController mc2 = map.dcMotorController.get("MC2");
-        drive.addLeftMotor(new DcMotor(mc1, 1));
-        drive.addLeftMotor(new DcMotor(mc1, 2));
+        drive.addRightMotor(new DcMotor(mc1, 1, DcMotor.Direction.REVERSE));
         drive.addRightMotor(new DcMotor(mc2, 1, DcMotor.Direction.REVERSE));
-        drive.addRightMotor(new DcMotor(mc2, 2, DcMotor.Direction.REVERSE));
+        drive.addLeftMotor(new DcMotor(mc1, 2));
+        drive.addLeftMotor(new DcMotor(mc2, 2));
 
         DcMotorController mc3 = map.dcMotorController.get("MC3");
+        DcMotorController mc4 = map.dcMotorController.get("MC4");
         sweeper = new Sweeper(new DcMotor(mc3, 1));
-        lift = new Lift(new DcMotor(mc3, 2));
+        lift = new Lift(new DcMotor(mc3, 2), new DcMotor(mc4, 1));
 
         ServoController sc1 = map.servoController.get("SC1");
-        bucketGate = new BinaryServo(new Servo(sc1, 1), 1, 0.4);
         bucketRotate = new BucketRotate(new Servo(sc1, 2));
         bucketSlide = new BucketSlide(new Servo(sc1, 3));
-        climberDropper = new BinaryServo(new Servo(sc1, 4), 0, 1);
 
         DeviceInterfaceModule cdi = map.deviceInterfaceModule.get("CDI");
         imu = new AdafruitIMU(cdi, 1);
@@ -81,21 +78,35 @@ public class MainRobot {
 
     public class Lift {
         private final DcMotor extension;
+        private final DcMotor elevation;
 
-        private Lift(DcMotor extension) {
+        private Lift(DcMotor extension, DcMotor elevation) {
             this.extension = extension;
+            this.elevation = elevation;
         }
 
         public void extend() {
-            extension.setPower(1);
-        }
-
-        public void retract() {
             extension.setPower(-1);
         }
 
-        public void stop() {
+        public void retract() {
+            extension.setPower(1);
+        }
+
+        public void stopExtension() {
             extension.setPower(0);
+        }
+
+        public void raise() {
+            elevation.setPower(-1);
+        }
+
+        public void lower() {
+            elevation.setPower(1);
+        }
+
+        public void stopElevation() {
+            elevation.setPower(0);
         }
     }
 

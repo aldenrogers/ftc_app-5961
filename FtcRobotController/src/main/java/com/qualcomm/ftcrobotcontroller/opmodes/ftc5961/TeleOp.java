@@ -30,7 +30,14 @@ public class TeleOp extends OpMode {
         } else if (gamepad2.dpad_down) {
             robot.lift.retract();
         } else {
-            robot.lift.stop();
+            robot.lift.stopExtension();
+        }
+        if (gamepad2.y) {
+            robot.lift.raise();
+        } else if (gamepad2.x) {
+            robot.lift.lower();
+        } else {
+            robot.lift.stopElevation();
         }
         if (gamepad2.dpad_left) {
             robot.bucketSlide.left();
@@ -39,8 +46,5 @@ public class TeleOp extends OpMode {
         } else {
             robot.bucketSlide.stop();
         }
-
-        robot.climberDropper.set(gamepad1.a);
-        robot.bucketGate.set(gamepad2.a);
     }
 }
