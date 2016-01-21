@@ -4,10 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 public class TeleOp extends OpMode {
     private MainRobot robot;
+    private boolean climberDropperOverride;
 
     @Override
     public void init() {
         robot = new MainRobot(hardwareMap);
+        climberDropperOverride = false;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class TeleOp extends OpMode {
         }
 
         float r = gamepad2.right_trigger - gamepad2.left_trigger;
-        robot.bucketRotate.setRotation(r / 4);
+        robot.bucketRotate.setRotation(r);
 
         if (gamepad2.dpad_up) {
             robot.lift.extend();
@@ -45,6 +47,23 @@ public class TeleOp extends OpMode {
             robot.bucketSlide.right();
         } else {
             robot.bucketSlide.stop();
+        }
+
+        if (gamepad1.b) {
+            robot.ziplinerTrigger.set(true);
+        } else if (gamepad1.y) {
+            robot.ziplinerTrigger.set(false);
+        }
+
+        if (gamepad2.a) {
+            climberDropperOverride = true;
+        } else if (gamepad1.a) {
+            climberDropperOverride = false;
+        }
+        if (climberDropperOverride) {
+            robot.climberDropperHigh.set(true);
+        } else {
+            robot.climberDropper.set(gamepad1.a);
         }
     }
 }
